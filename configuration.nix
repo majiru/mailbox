@@ -1,5 +1,8 @@
+let
+  fetchKeys = { pkgs, username }:
+    (pkgs.lib.strings.splitString "\n" (pkgs.lib.strings.removeSuffix "\n" (builtins.readFile (builtins.fetchurl "https://github.com/${username}.keys"))));
+in
 { config, pkgs, ... }:
-
 {
   imports =
     [
@@ -43,8 +46,8 @@
 
   users.users.moody = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = (pkgs.lib.strings.splitString "\n" (pkgs.lib.strings.removeSuffix "\n" (builtins.readFile (builtins.fetchurl "https://github.com/majiru.keys"))));
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = fetchKeys { inherit pkgs; username = "majiru"; };
   };
   users.groups."mailers".members = [ "dovecot2" "postfix" ];
   nix.settings.trusted-users = [ "root" "@wheel" ];
