@@ -4,7 +4,7 @@ in
 with pkgs; mkShell {
   shellHook = ''
     build() { morph build network.nix; }
-    deploy() { morph deploy network.nix $*; }
+    deploy() { morph deploy --upload-secrets network.nix $*; }
   '';
   buildInputs = [
     morph
