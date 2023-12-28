@@ -1,18 +1,5 @@
-let
-  fetchKeys = { pkgs, username }:
-    (pkgs.lib.strings.splitString "\n" (pkgs.lib.strings.removeSuffix "\n" (builtins.readFile (builtins.fetchurl "https://github.com/${username}.keys"))));
-in
-{ config, pkgs, ... }:
+{ pkgs, keys, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      (builtins.fetchTarball {
-        url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/nixos-23.05/nixos-mailserver-nixos-23.05.tar.gz";
-        sha256 = "0bbv0hcwpm9vhvqnj51k84c3fx6x0vgv68yf0f8kdjvprpzxjdgk";
-      })
-    ];
-
   security.acme = {
     acceptTerms = true;
     defaults.email = "postmaster@indexwarp.net";
@@ -47,7 +34,7 @@ in
   users.users.moody = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keys = fetchKeys { inherit pkgs; username = "majiru"; };
+    openssh.authorizedKeys.keys = keys;
   };
   users.groups."mailers".members = [ "dovecot2" "postfix" ];
   nix.settings.trusted-users = [ "root" "@wheel" ];
