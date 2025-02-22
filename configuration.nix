@@ -36,13 +36,20 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = keys;
   };
-  users.groups."mailers".members = [ "dovecot2" "postfix" ];
-  nix.settings.trusted-users = [ "root" "@wheel" ];
+  users.groups."mailers".members = [
+    "dovecot2"
+    "postfix"
+  ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 
   environment.systemPackages = with pkgs; [
     vim
     wget
     curl
+    rc
   ];
 
   services.openssh.enable = true;
@@ -67,4 +74,3 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 }
-
