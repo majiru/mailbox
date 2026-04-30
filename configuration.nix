@@ -17,6 +17,7 @@
       };
     };
     certificateScheme = "acme-nginx";
+    stateVersion = 3;
   };
 
   boot.loader.grub.enable = true;
@@ -31,6 +32,9 @@
   users.mutableUsers = false;
   security.sudo.wheelNeedsPassword = false;
 
+  # TEMPORARY for copy fail
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
+
   users.users.moody = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
@@ -40,10 +44,16 @@
     "dovecot2"
     "postfix"
   ];
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-  ];
+  nix.settings = {
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     vim

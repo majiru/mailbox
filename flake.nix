@@ -2,9 +2,9 @@
   description = "moody's mail server configuration";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-24.11";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
 
-    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-24.11";
+    mailserver.url = "gitlab:simple-nixos-mailserver/nixos-mailserver/nixos-25.11";
     mailserver.inputs.nixpkgs.follows = "nixpkgs";
   };
 
