@@ -32,9 +32,6 @@
   users.mutableUsers = false;
   security.sudo.wheelNeedsPassword = false;
 
-  # TEMPORARY for copy fail
-  boot.kernelPackages = pkgs.linuxPackages_6_18;
-
   users.users.moody = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
